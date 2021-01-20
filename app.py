@@ -3,6 +3,7 @@ import time
 import random
 import snake
 import food
+import maps
 pygame.init()
 
 white=(255, 255, 255)
@@ -48,7 +49,9 @@ def gameLoop():
 
     foodx, foody = food.positionOfFood(dis_width, dis_height, snake_block)
 
-    while not game_over:
+    
+
+    while not game_over:        
 
         while game_close == True:
             dis.fill(white)
@@ -88,7 +91,7 @@ def gameLoop():
         dis.fill(blue)
         
         pygame.draw.rect(dis, green, [foodx, foody, snake_block, snake_block])
-        
+
         snake_head = []
         snake.grow_snake(snake_list, snake_head, length_of_snake, x1, y1)
 
@@ -98,6 +101,9 @@ def gameLoop():
         snake.move_snake(snake_block, snake_list, black, dis)
         your_score(length_of_snake - 1)
 
+        maps.first_map(dis_width, dis_height, dis, snake_block)
+        if maps.check_snake_collision("first_level", snake_head):
+            game_close=True
         pygame.display.update()
 
         if x1 == foodx and y1 == foody:
